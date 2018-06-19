@@ -16,9 +16,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
 }
 
 dependencies {
+    compile 'com.applandeo:material-calendar-view:1.4.0'
     compile 'com.google.code.gson:gson:2.8.0'
     implementation 'ca.mimic:oauth2library:2.4.2'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
