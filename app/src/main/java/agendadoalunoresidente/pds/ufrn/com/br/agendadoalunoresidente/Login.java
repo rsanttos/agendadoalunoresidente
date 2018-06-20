@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import agendaufrnfw.ufrn.imd.pds.model.Student;
 import ca.mimic.oauth2library.OAuth2Client;
 import ca.mimic.oauth2library.OAuthResponse;
 

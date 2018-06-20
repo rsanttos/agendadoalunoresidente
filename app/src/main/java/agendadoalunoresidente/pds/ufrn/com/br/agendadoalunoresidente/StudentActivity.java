@@ -15,11 +15,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import agendadoalunoresidente.pds.ufrn.com.br.agendadoalunoresidente.service.StudentService;
+import agendadoalunoresidente.pds.ufrn.com.br.agendadoalunoresidente.service.GraduateStudentService;
 import agendaufrnfw.ufrn.imd.pds.dto.ClassDTO;
 import agendaufrnfw.ufrn.imd.pds.dto.EvaluationDTO;
 import agendaufrnfw.ufrn.imd.pds.dto.TaskDTO;
-import agendaufrnfw.ufrn.imd.pds.model.Student;
+import agendaufrnfw.ufrn.imd.pds.model.calendar.Evaluation;
+import agendaufrnfw.ufrn.imd.pds.model.calendar.Task;
+import agendaufrnfw.ufrn.imd.pds.model.user.GraduateStudent;
+import agendaufrnfw.ufrn.imd.pds.model.user.Student;
 
 public class StudentActivity extends AppCompatActivity {
 
@@ -37,24 +40,24 @@ public class StudentActivity extends AppCompatActivity {
 
         if(getIntent().hasExtra("token")){
             String token = getIntent().getStringExtra("token");
-            StudentService studentService = new StudentService(token);
+            GraduateStudentService studentService = new GraduateStudentService(token);
             try {
-                Student student = studentService.execute().get();
+                GraduateStudent student = studentService.execute().get();
                 tvNome.setText(student.getNome_discente());
                 tvCurso.setText(student.getNome_curso());
                 tvMatricula.setText(String.valueOf(student.getMatricula()));
-                List<TaskDTO> allTasks = new ArrayList<TaskDTO>();
-                List<EvaluationDTO> allEvaluations = new ArrayList<EvaluationDTO>();
+                List<Task> allTasks = new ArrayList<Task>();
+                List<Evaluation> allEvaluations = new ArrayList<Evaluation>();
                 for(ClassDTO classe : student.getClasses()){
                     allTasks.addAll(classe.getTasks());
                     allEvaluations.addAll(classe.getEvaluations());
                 }
 
-                ArrayAdapter<TaskDTO> arrayAdapterTarefas = new ArrayAdapter<TaskDTO>(this,
+                ArrayAdapter<Task> arrayAdapterTarefas = new ArrayAdapter<Task>(this,
                         android.R.layout.simple_list_item_1, allTasks);
                 lvTarefas.setAdapter(arrayAdapterTarefas);
 
-                ArrayAdapter<EvaluationDTO> arrayAdapterAvaliacoes = new ArrayAdapter<EvaluationDTO>(this,
+                ArrayAdapter<Evaluation> arrayAdapterAvaliacoes = new ArrayAdapter<Evaluation>(this,
                         android.R.layout.simple_list_item_1, allEvaluations);
                 lvAvaliacoes.setAdapter(arrayAdapterAvaliacoes);
 
@@ -89,6 +92,13 @@ public class StudentActivity extends AppCompatActivity {
         String token = "";
         int id = item.getItemId();
         switch (id){
+            case R.id.item_calendario_compromissos:
+                intent = new Intent();
+                intent.setClass(this, CalendarCustomActivity.class);
+                token = getIntent().getStringExtra("token");
+                intent.putExtra("token", token);
+                startActivity(intent);
+                return true;
             case R.id.item_tarefas_avaliacoes:
                 intent = new Intent();
                 intent.setClass(this, StudentActivity.class);

@@ -15,10 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import agendadoalunoresidente.pds.ufrn.com.br.agendadoalunoresidente.service.GraduateStudentService;
 import agendadoalunoresidente.pds.ufrn.com.br.agendadoalunoresidente.service.LoanService;
-import agendadoalunoresidente.pds.ufrn.com.br.agendadoalunoresidente.service.StudentService;
 import agendaufrnfw.ufrn.imd.pds.dto.LoanDTO;
-import agendaufrnfw.ufrn.imd.pds.model.Student;
+import agendaufrnfw.ufrn.imd.pds.model.calendar.Loan;
+import agendaufrnfw.ufrn.imd.pds.model.user.GraduateStudent;
 
 public class LoanActivity extends AppCompatActivity {
 
@@ -33,16 +34,16 @@ public class LoanActivity extends AppCompatActivity {
         if(getIntent().hasExtra("token")){
             String token = getIntent().getStringExtra("token");
             try {
-                StudentService studentService = new StudentService(token);
-                Student student = studentService.execute().get();
+                GraduateStudentService studentService = new GraduateStudentService(token);
+                GraduateStudent student = studentService.execute().get();
                 LoanService loanService = new LoanService(student.getCpf_cnpj(), token);
-                LoanDTO[] loans = loanService.execute().get();
-                List<LoanDTO> loansArray = new ArrayList<LoanDTO>();
+                Loan[] loans = loanService.execute().get();
+                List<Loan> loansArray = new ArrayList<Loan>();
                 for(int i = 0 ; i < loans.length ; i++){
                     loansArray.add(loans[i]);
                 }
                 if(loansArray.size() > 0) {
-                    ArrayAdapter<LoanDTO> arrayAdapterEmprestimos = new ArrayAdapter<LoanDTO>(this,
+                    ArrayAdapter<Loan> arrayAdapterEmprestimos = new ArrayAdapter<Loan>(this,
                             android.R.layout.simple_list_item_1, loansArray);
                     lvLoans.setAdapter(arrayAdapterEmprestimos);
                 } else {
