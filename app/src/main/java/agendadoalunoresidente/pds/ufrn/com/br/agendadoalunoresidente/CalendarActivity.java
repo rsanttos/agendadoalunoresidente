@@ -13,8 +13,9 @@ import android.widget.TextView;
 
 import java.util.concurrent.ExecutionException;
 
-import agendadoalunoresidente.pds.ufrn.com.br.agendadoalunoresidente.service.CalendarService;
+import agendadoalunoresidente.pds.ufrn.com.br.agendadoalunoresidente.service.GraduateStudentCalendarService;
 import agendaufrnfw.ufrn.imd.pds.model.calendar.CalendarUFRN;
+import agendaufrnfw.ufrn.imd.pds.model.calendar.GraduateStudentCalendar;
 import agendaufrnfw.ufrn.imd.pds.model.calendar.Holiday;
 
 public class CalendarActivity extends AppCompatActivity {
@@ -27,30 +28,22 @@ public class CalendarActivity extends AppCompatActivity {
         criarBarraMenu();
 
         TextView tvAno = (TextView) findViewById(R.id.tvValorAno);
-        TextView tvMatricula = (TextView) findViewById(R.id.tvValorMatricula);
-        TextView tvMatriculaExtraordinaria = (TextView) findViewById(R.id.tvValorMatriculaExtraordinaria);
-        TextView tvRematricula = (TextView) findViewById(R.id.tvValorRematricula);
-        TextView tvPeriodo = (TextView) findViewById(R.id.tvValorPeriodo);
 
-        CalendarService calendarService = new CalendarService();
-        CalendarUFRN calendarDTO = null;
+        GraduateStudentCalendarService graduateStudentCalendarService = new GraduateStudentCalendarService();
+        GraduateStudentCalendar graduateStudentCalendar = null;
         try {
-            calendarDTO = calendarService.execute().get();
+            graduateStudentCalendar = graduateStudentCalendarService.execute().get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        if(calendarDTO != null){
-            tvAno.setText(String.valueOf(calendarDTO.getAno()));
-            tvMatricula.setText(calendarDTO.getInicio_matricula_online() + " - " + calendarDTO.getFim_matricula_online());
-            tvMatriculaExtraordinaria.setText(calendarDTO.getInicio_matricula_extraordinaria() + " - " + calendarDTO.getFim_matricula_extraordinaria());
-            tvPeriodo.setText(calendarDTO.getInicio_periodo() + " - " + calendarDTO.getFim_periodo());
-            tvRematricula.setText(calendarDTO.getInicio_rematricula() + " - " + calendarDTO.getFim_rematricula());
+        if(graduateStudentCalendar != null){
+            tvAno.setText(String.valueOf(graduateStudentCalendar.getAno()));
 
             ListView lvHolidays = (ListView) findViewById(R.id.lvFeriados);
             ArrayAdapter<Holiday> arrayAdapterHolidays = new ArrayAdapter<Holiday>(this,
-                    android.R.layout.simple_list_item_1, calendarDTO.getHolidays());
+                    android.R.layout.simple_list_item_1, graduateStudentCalendar.getHolidays());
             lvHolidays.setAdapter(arrayAdapterHolidays);
         }
 

@@ -19,14 +19,8 @@ import java.util.*;
 import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 
-import agendadoalunoresidente.pds.ufrn.com.br.agendadoalunoresidente.service.CalendarService;
+import agendadoalunoresidente.pds.ufrn.com.br.agendadoalunoresidente.service.GraduateStudentCalendarService;
 import agendadoalunoresidente.pds.ufrn.com.br.agendadoalunoresidente.service.GraduateStudentService;
-import agendadoalunoresidente.pds.ufrn.com.br.agendadoalunoresidente.service.ProfessorService;
-import agendaufrnfw.ufrn.imd.pds.dto.CalendarDTO;
-import agendaufrnfw.ufrn.imd.pds.dto.ClassDTO;
-import agendaufrnfw.ufrn.imd.pds.dto.EvaluationDTO;
-import agendaufrnfw.ufrn.imd.pds.dto.HolidayDTO;
-import agendaufrnfw.ufrn.imd.pds.dto.TaskDTO;
 import agendaufrnfw.ufrn.imd.pds.model.calendar.CalendarUFRN;
 import agendaufrnfw.ufrn.imd.pds.model.calendar.Commitment;
 import agendaufrnfw.ufrn.imd.pds.model.calendar.DayWithoutWork;
@@ -71,16 +65,14 @@ public class CalendarCustomActivity extends AppCompatActivity {
     }
 
     private List<EventDay> populaEvents(){
-        List<TaskDTO> allTasks = new ArrayList<TaskDTO>();
-        List<EvaluationDTO> allEvaluations = new ArrayList<EvaluationDTO>();
         CalendarUFRN cDto = null;
         GraduateStudent gsDto = null;
         if(getIntent().hasExtra("token")){
             String token = getIntent().getStringExtra("token");
             GraduateStudentService graduateStudentService = new GraduateStudentService(token);
             try {
-                CalendarService calendarService = new CalendarService();
-                cDto = calendarService.execute().get();
+                GraduateStudentCalendarService graduateStudentCalendarService = new GraduateStudentCalendarService();
+                cDto = graduateStudentCalendarService.execute().get();
                 gsDto = graduateStudentService.execute().get();
                 tvNome.setText(gsDto.getNome_discente());
                 tvCurso.setText(gsDto.getNome_curso());
@@ -96,7 +88,6 @@ public class CalendarCustomActivity extends AppCompatActivity {
         allCommitments.addAll(Arrays.asList(cDto.getHolidays()));
 
         allEvents = criaListaEventos(allCommitments);
-        allEvents.addAll(criaListaEventosCalendario(cDto));
 
         return allEvents;
     }
@@ -131,16 +122,6 @@ public class CalendarCustomActivity extends AppCompatActivity {
         }
 
         return events;
-    }
-
-    private List<EventDay> criaListaEventosCalendario(CalendarUFRN calendarDTO){
-        List<EventDay> eventsCalendar = new ArrayList<EventDay>();
-        java.util.Calendar c = Calendar.getInstance();
-        c.setTimeInMillis(calendarDTO.getFim_periodo());
-        EventDay eventDay = new EventDay(c, R.drawable.end_period);
-        eventsCalendar.add(eventDay);
-
-        return eventsCalendar;
     }
 
     private void criarCalendario(CalendarView calendarView, List<EventDay> events) throws OutOfDateRangeException {

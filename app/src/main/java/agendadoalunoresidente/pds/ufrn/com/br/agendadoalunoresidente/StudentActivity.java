@@ -22,7 +22,6 @@ import agendaufrnfw.ufrn.imd.pds.dto.TaskDTO;
 import agendaufrnfw.ufrn.imd.pds.model.calendar.Evaluation;
 import agendaufrnfw.ufrn.imd.pds.model.calendar.Task;
 import agendaufrnfw.ufrn.imd.pds.model.user.GraduateStudent;
-import agendaufrnfw.ufrn.imd.pds.model.user.Student;
 
 public class StudentActivity extends AppCompatActivity {
 

@@ -26,7 +26,7 @@
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="130dp">
+        android:layout_height="30dp">
 
         <TableRow
             android:layout_width="match_parent"
@@ -45,75 +45,6 @@
                 android:textSize="18sp" />
         </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/tvMatricula"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Matrícula"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/tvValorMatricula"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/tvMatriculaExtraordinaria"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Matrícula Extraordinária"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/tvValorMatriculaExtraordinaria"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/tvPeriodo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Período"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/tvValorPeriodo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/tvRematricula"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rematricula"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-            <TextView
-                android:id="@+id/tvValorRematricula"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp" />
-
-        </TableRow>
     </TableLayout>
 
     <TextView
